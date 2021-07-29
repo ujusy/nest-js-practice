@@ -14,12 +14,13 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+    "db:migrate": "npm run typeorm migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
@@ -27,11 +28,12 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.1",
+    "Babel": "0.0.1",
     "mysql2": "^2.2.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.2.34"
+    "typeorm": "^0.2.35"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
