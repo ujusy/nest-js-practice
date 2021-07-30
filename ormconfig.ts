@@ -12,6 +12,9 @@ const config: TypeOrmModuleOptions = {
   // entities: [path.join(__dirname, '**/*.entity{.ts,.js}')],
   entities: [User],
   migrations: [__dirname + '/src/migrations/*.ts'],
+  cli: {
+    migrationsDir: __dirname + '/src/migrations',
+  },
   synchronize: false,
 };
 

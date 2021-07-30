@@ -10,24 +10,7 @@ import path from 'path';
 
 @Module({
   // imports: [TypeOrmModule.forRoot(ormconfig)],
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3308,
-      username: 'root',
-      password: '1234',
-      database: 'ujusy',
-      // entities: [path.join(__dirname, '**/*.entity{.ts,.js}')],
-      entities: [User],
-      // migrations: [path.join(__dirname, '**/migration/*{.ts,.js}')],
-      migrations: [__dirname + '../../dist/migrations/*.ts'],
-      cli: { migrationsDir: 'src/migrations' },
-      autoLoadEntities: true,
-      charset: 'utf8mb4',
-      synchronize: false,
-    }),
-  ],
+  imports: [TypeOrmModule.forRoot(ormconfig)],
   controllers: [AppController],
   providers: [AppService],
 })
