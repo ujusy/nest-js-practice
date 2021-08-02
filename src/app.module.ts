@@ -1,17 +1,22 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-// import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import * as ormconfig from './ormconfig';
-import { User } from './user/entities/user.entity';
-import path from 'path';
+
+import { UserController } from './user/user.controller';
+import { UserModule } from './user/user.module';
 
 @Module({
   // imports: [TypeOrmModule.forRoot(ormconfig)],
-  imports: [TypeOrmModule.forRoot(ormconfig)],
-  controllers: [AppController],
+  imports: [TypeOrmModule.forRoot(ormconfig), UserModule],
+  controllers: [AppController, UserController],
   providers: [AppService],
 })
 export class AppModule {}
+// export class AppModule implements NestModule {
+//   configure(consumer: MiddlewareConsumer): void {
+//     consumer.apply(LoggerMiddleware).forRoutes('*');
+//   }
+// }
