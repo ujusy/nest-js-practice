@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { userErrors } from './error/errors';
 
 @Injectable()
 export class UserService {
@@ -19,7 +20,7 @@ export class UserService {
       },
     });
 
-    if (user) return false;
+    if (user) throw new BadRequestException(userErrors.EXISTING_USER);
 
     const userData = await this.userRepository.save({
       email: data.email,
