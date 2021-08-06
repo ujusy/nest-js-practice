@@ -9,14 +9,8 @@ import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 
 @Module({
-  // imports: [TypeOrmModule.forRoot(ormconfig)],
   imports: [TypeOrmModule.forRoot(ormconfig), UserModule],
   controllers: [AppController, UserController],
   providers: [AppService],
 })
 export class AppModule {}
-// export class AppModule implements NestModule {
-//   configure(consumer: MiddlewareConsumer): void {
-//     consumer.apply(LoggerMiddleware).forRoutes('*');
-//   }
-// }

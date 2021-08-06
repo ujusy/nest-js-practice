@@ -5,6 +5,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { userErrors } from './error/errors';
+import { createDeflateRaw } from 'zlib';
 
 @Injectable()
 export class UserService {
@@ -13,7 +14,6 @@ export class UserService {
   ) {}
 
   async create(data: CreateUserDto) {
-    console.log('data');
     const user = await this.userRepository.findOne({
       where: {
         email: data.email,
@@ -30,8 +30,10 @@ export class UserService {
     return userData;
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    const users = await this.userRepository.find({});
+
+    return users;
   }
 
   findOne(id: number) {

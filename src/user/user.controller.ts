@@ -19,7 +19,6 @@ export class UserController {
 
   @Post()
   create(@Body() data: CreateUserDto) {
-    console.log(data);
     return this.userService.create(data);
   }
 
@@ -32,7 +31,6 @@ export class UserController {
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
-  x;
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
