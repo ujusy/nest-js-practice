@@ -9,6 +9,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { userErrors } from './error/errors';
+import * as bcrypt from 'bcrypt';
 import { createDeflateRaw } from 'zlib';
 
 @Injectable()
@@ -26,10 +27,14 @@ export class UserService {
 
     if (user) throw new BadRequestException(userErrors.EXISTING_USER);
 
+    const password = await bcrypt.hash(data.password, 12);
     const userData = await this.userRepository.save({
       email: data.email,
       name: data.name,
+      password,
     });
+
+    delete userData.password;
 
     return userData;
   }
@@ -46,6 +51,10 @@ export class UserService {
     if (!user) throw new NotFoundException(userErrors.NOT_FOUND);
 
     return user;
+  }
+
+  async findName(name: string): Promise<User | undefined> {
+    return this.userRepository.findOne(name);
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
