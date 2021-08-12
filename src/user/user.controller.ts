@@ -16,6 +16,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from '../auth/local-auth.guard';
 import { AuthService } from '../auth/auth.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('USERS')
 @Controller('user')
@@ -32,9 +33,8 @@ export class UserController {
 
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-  async login(@Body() data) {
-    console.log(data);
-    await this.authService.validateUser(data.email, data.password);
+  async login(@Req() req) {
+    return req.user;
   }
 
   @Get()

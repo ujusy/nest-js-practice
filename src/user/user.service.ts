@@ -53,10 +53,6 @@ export class UserService {
     return user;
   }
 
-  async findName(name: string): Promise<User | undefined> {
-    return this.userRepository.findOne(name);
-  }
-
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
