@@ -7,20 +7,34 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { LocalAuthGuard } from '../auth/local-auth.guard';
+import { AuthService } from '../auth/auth.service';
 
 @ApiTags('USERS')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private authService: AuthService,
+  ) {}
 
   @Post()
   create(@Body() data: CreateUserDto) {
     return this.userService.create(data);
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('/login')
+  async login(@Body() data) {
+    console.log(data);
+    await this.authService.validateUser(data.email, data.password);
   }
 
   @Get()
