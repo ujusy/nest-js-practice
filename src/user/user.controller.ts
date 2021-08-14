@@ -17,6 +17,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from '../auth/local-auth.guard';
 import { AuthService } from '../auth/auth.service';
 import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('USERS')
 @Controller('user')
@@ -34,8 +35,13 @@ export class UserController {
   @UseGuards(LocalAuthGuard)
   @Post('/login')
   async login(@Req() req) {
-    console.log(req.user);
     return this.authService.login(req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/profile')
+  getProfile(@Req() req) {
+    return req.user;
   }
 
   @Get()
