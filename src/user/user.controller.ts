@@ -16,8 +16,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from '../auth/local-auth.guard';
 import { AuthService } from '../auth/auth.service';
-import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { UserRole } from './entities/user.entity';
+import { Role } from '../role/roles.decorator';
 
 @ApiTags('USERS')
 @Controller('user')
@@ -44,6 +45,7 @@ export class UserController {
     return req.user;
   }
 
+  @Role([UserRole.ADMIN])
   @Get()
   findAll() {
     return this.userService.findAll();
